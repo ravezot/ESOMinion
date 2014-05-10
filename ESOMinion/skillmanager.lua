@@ -747,6 +747,29 @@ function eso_skillmanager.CanCast( target, skill )
 						--d("Target Buffcheck : "..tostring(mc_helper.BufflistHasBuffs(mybuffs, skill.teff1)))
 						if ( not mc_helper.BufflistHasBuffs(targetbuffs, skill.teff1) ) then continue end	
 					end						
+				if (eso_skillmanager.lastsummonTmr == 0) then eso_skillmanager.lastsummonTmr = ml_global_information.Now-2000 end
+        if ( ml_global_information.Now - eso_skillmanager.lastsummonTmr > 2000 and AbilityList:CanCast( 30626, TargetID ) ) then
+            local EList = EntityList("nearest,maxdistance=15,contentid=Twilight Matriarch")
+            if ( TableSize(EList) > 0 ) then            
+                eso_skillmanager.lastsummonTmr = ml_global_information.Now
+            else
+                AbilityList:Cast(30626,TargetID)
+                eso_skillmanager.lastsummonTmr = ml_global_information.Now
+                eso_skillmanager.lastcastTmr = ml_global_information.Now
+                return true
+            end
+        end
+	if (eso_skillmanager.lastsummonTmr == 0) then eso_skillmanager.lastsummonTmr = ml_global_information.Now-2000 end
+        if ( ml_global_information.Now - eso_skillmanager.lastsummonTmr > 2000 and AbilityList:CanCast( 30657, TargetID ) ) then
+            local EList = EntityList("nearest,maxdistance=15,contentid=Clannfear")
+            if ( TableSize(EList) > 0 ) then            
+                eso_skillmanager.lastsummonTmr = ml_global_information.Now
+            else
+                AbilityList:Cast(30657,TargetID)
+                eso_skillmanager.lastsummonTmr = ml_global_information.Now
+                eso_skillmanager.lastcastTmr = ml_global_information.Now
+                return true
+            end
 					if ( skill.tneff1 ~= "" and targetbuffs )then 
 						--Possible value in tneff1: "134,245+123,552+123+531"
 						--d("Not Target Buffcheck : "..tostring(mc_helper.BufflistHasBuffs(mybuffs, skill.tneff1)))
